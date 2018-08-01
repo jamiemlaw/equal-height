@@ -67,7 +67,7 @@
       // if this is the first element, or the top of this element isn't in line
       // with the previous element, start a new row
       if (!rows.length || Math.floor(Math.abs(getTop(elem) - getTop(elems[i-1]))) > 1) {
-        rows.push([elems[i]]);
+        rows.push([elem]);
       }
       // else, add to the end of the current row
       else {
