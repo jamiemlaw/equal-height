@@ -1,8 +1,8 @@
 (function (getBoundingClientRect) {
 
   /**
-   * Gets an element's pixel height including borders and padding, excluding
-   * margin
+   * Gets an element's pixel height including borders and padding,
+   * excluding margin
    */
   function getHeight(el) {
     var _ = el[getBoundingClientRect]();
@@ -23,26 +23,19 @@
    */
   function setHeight(el, height) {
     var style = el.style
-    
-    // test how high the element would be if style.height were 0
+    var actualHeight;
+
+    // set the height naively
     style._height = style.height;
-    style.height = 0;
-    
-    // therefore, set it to the height required to be `height` px tall
-    //
-    // this is the same as writing
-    // if (height > getHeight(el)) {
-    //   style.height = (height - getHeight(el)) + 'px';
-    // }
-    //
-    // but with one fewer calls to `getHeight`
-    
-    height -= getHeight(el);
-    
-    if (height > 0) {
-      style.height = height + 'px';
+    style.height = height + 'px';
+
+    // test the element's new height
+    actualHeight = getHeight(el);
+
+    // if it isn't correct, adjust
+    if (actualHeight !== height) {
+      style.height = (height + height - actualHeight) + 'px';
     }
-    
   }
 
   /*
